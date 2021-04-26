@@ -8,12 +8,6 @@ sudo apt install universal-ctags
 git clone https://github.com/EternalNight996/vim-linux.git ~/.vim
 # 再建立.vimrc软链接
 ln -s ~/.vim/vimrc ~/.vimrc
-# 创建bundle目录
-mkdir ~/.vim/bundle
-# 下载vundle
-git clone https://github.com/EternalNight996/vundle.git ~/.vim/bundle/vundle
-# 安装插件
-gvim #输入:BundleInstall
 # 测试html或py或C
 vim test.html
 # 快捷键请参考博客:
