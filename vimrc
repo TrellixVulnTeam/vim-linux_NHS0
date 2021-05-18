@@ -1,4 +1,9 @@
 source ~/.vim/bundles.vim
+Plugin 'marijnh/tern_for_vim'
+Plugin 'Valloric/YouCompleteMe'
+let g:ycm_server_python_interpreter='/usr/bin/python3'
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+
 
 " 解决乱码
 "set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1

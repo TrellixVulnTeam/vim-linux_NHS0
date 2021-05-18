@@ -25,7 +25,7 @@ Bundle 'tomtom/tlib_vim'
 "-----------------
 " Fast navigation
 "-----------------
-Bundle 'edsono/vim-matchit'
+Bundle 'bumaociyuan/vim-matchit'
 Bundle 'Lokaltog/vim-easymotion'
 
 "--------------
