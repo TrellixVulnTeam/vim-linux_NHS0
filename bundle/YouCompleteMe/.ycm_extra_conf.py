@@ -28,16 +28,80 @@
 #
 # For more information, please refer to <http://unlicense.org/>
 
-import os.path as p
+import os.path
+import os
+import ycm_core
 import subprocess
 
-DIR_OF_THIS_SCRIPT = p.abspath( p.dirname( __file__ ) )
-DIR_OF_THIRD_PARTY = p.join( DIR_OF_THIS_SCRIPT, 'third_party' )
+DIR_OF_THIS_SCRIPT = os.path.abspath( os.path.dirname( __file__ ) )
+DIR_OF_THIRD_PARTY = os.path.join( DIR_OF_THIS_SCRIPT, 'third_party' )
 
+flags = [
+'-Wall',
+'-Wextra',
+'-Werror',
+'-fexceptions',
+'-DNDEBUG',
+'-std=c++11',
+'-x',
+'c++',
+'-isystem',
+'/usr/include',
+'-isystem',
+'/usr/local/include',
+'-isystem',
+'/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1',
+'-isystem',
+'/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include',
+]
+
+compilation_database_folder = ''
+
+if os.path.exists( compilation_database_folder ):
+  database = ycm_core.CompilationDatabase( compilation_database_folder )
+else:
+  database = None
+SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]
+
+def DirectoryOfThisScript():
+  return os.path.dirname( os.path.abspath( __file__ ) )
+
+def IsHeaderFile( filename ):
+  extension = os.path.splitext( filename )[ 1 ]
+  return extension in [ '.h', '.hxx', '.hpp', '.hh' ]
+
+def GetCompilationInfoForFile( filename ):
+  if IsHeaderFile( filename ):
+    basename = os.path.splitext( filename )[ 0 ]
+    for extension in SOURCE_EXTENSIONS:
+      replacement_file = basename + extension
+      if os.path.exists( replacement_file ):
+        compilation_info = database.GetCompilationInfoForFile(
+          replacement_file )
+        if compilation_info.compiler_flags_:
+          return compilation_info
+    return None
+  return database.GetCompilationInfoForFile( filename )
+
+def Settings( **kwargs ):
+  if not database:
+    return {
+      'flags': flags,
+      'include_paths_relative_to_dir': DirectoryOfThisScript()
+    }
+  filename = kwargs[ 'filename' ]
+  compilation_info = GetCompilationInfoForFile( filename )
+  if not compilation_info:
+    return None
+
+  return {
+    'flags': list( compilation_info.compiler_flags_ ),
+    'include_paths_relative_to_dir': compilation_info.compiler_working_dir_
+  }
 
 def GetStandardLibraryIndexInSysPath( sys_path ):
   for index, path in enumerate( sys_path ):
-    if p.isfile( p.join( path, 'os.py' ) ):
+    if os.path.isfile( os.path.join( path, 'os.py' ) ):
       return index
   raise RuntimeError( 'Could not find standard library path in Python path.' )
 
@@ -45,17 +109,17 @@ def GetStandardLibraryIndexInSysPath( sys_path ):
 def PythonSysPath( **kwargs ):
   sys_path = kwargs[ 'sys_path' ]
 
-  dependencies = [ p.join( DIR_OF_THIS_SCRIPT, 'python' ),
-                   p.join( DIR_OF_THIRD_PARTY, 'requests-futures' ),
-                   p.join( DIR_OF_THIRD_PARTY, 'ycmd' ),
-                   p.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'idna' ),
-                   p.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'chardet' ),
-                   p.join( DIR_OF_THIRD_PARTY,
+  dependencies = [ os.path.join( DIR_OF_THIS_SCRIPT, 'python' ),
+                   os.path.join( DIR_OF_THIRD_PARTY, 'requests-futures' ),
+                   os.path.join( DIR_OF_THIRD_PARTY, 'ycmd' ),
+                   os.path.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'idna' ),
+                   os.path.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'chardet' ),
+                   os.path.join( DIR_OF_THIRD_PARTY,
                            'requests_deps',
                            'urllib3',
                            'src' ),
-                   p.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'certifi' ),
-                   p.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'requests' ) ]
+                   os.path.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'certifi' ),
+                   os.path.join( DIR_OF_THIRD_PARTY, 'requests_deps', 'requests' ) ]
 
   # The concurrent.futures module is part of the standard library on Python 3.
   interpreter_path = kwargs[ 'interpreter_path' ]
@@ -63,10 +127,11 @@ def PythonSysPath( **kwargs ):
     interpreter_path, '-c', 'import sys; print( sys.version_info[ 0 ] )' ]
   ).rstrip().decode( 'utf8' ) )
   if major_version == 2:
-    dependencies.append( p.join( DIR_OF_THIRD_PARTY, 'pythonfutures' ) )
+    dependencies.append( os.path.join( DIR_OF_THIRD_PARTY, 'pythonfutures' ) )
 
   sys_path[ 0:0 ] = dependencies
   sys_path.insert( GetStandardLibraryIndexInSysPath( sys_path ) + 1,
-                   p.join( DIR_OF_THIRD_PARTY, 'python-future', 'src' ) )
+                   os.path.join( DIR_OF_THIRD_PARTY, 'python-future', 'src' ) )
 
   return sys_path
+
