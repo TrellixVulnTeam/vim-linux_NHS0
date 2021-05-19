@@ -2,7 +2,6 @@ source ~/.vim/bundles.vim
 Plugin 'marijnh/tern_for_vim'
 Plugin 'Valloric/YouCompleteMe'
 
-
 " 解决乱码
 "set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 set encoding=utf-8
@@ -449,7 +448,7 @@ let g:ycm_min_num_of_chars_for_completion=1 " 从第1个键入字符就开始罗
 let g:ycm_cache_omnifunc=0 " 禁止缓存匹配项,每次都重新生成匹配项
 
 let g:ycm_seed_identifiers_with_syntax=1 " 语法关键字补全
-nnoremap <F7> :YcmForceCompileAndDiagnostics<CR>
+"nnoremap <F7> :YcmForceCompileAndDiagnostics<CR>
 "nnoremap <leader>lo :lopen<CR> "open locationlist
 "nnoremap <leader>lc :lclose<CR>    "close locationlist
 
@@ -458,7 +457,7 @@ let g:ycm_complete_in_comments = 1 "在注释输入中也能补全
 let g:ycm_complete_in_strings = 1 "在字符串输入中也能补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0 "注释和字符串中的文字也会被收入补全
 
-let g:ycm_max_num_identifier_candidates = 50
+let g:ycm_max_num_identifier_candidates =50
 let g:ycm_auto_trigger = 1
 
 let g:ycm_error_symbol = '>>'
@@ -472,3 +471,75 @@ let g:ycm_semantic_triggers = {
    \   'css': [ 're!^\s{4}', 're!' ],
    \ }
 "=======================YouCompleteMe补全配置==========================
+"
+set clipboard+=unnamed "共享粘贴板
+"自动补全基本设定
+:inoremap ( ()<ESC>i
+:inoremap ) <c-r>=ClosePair(')')<CR>
+:inoremap { {<CR>}<ESC>O
+:inoremap } <c-r>=ClosePair('}')<CR>
+:inoremap [ []<ESC>i
+:inoremap ] <c-r>=ClosePair(']')<CR>
+:inoremap " ""<ESC>i
+:inoremap ' ''<ESC>i
+function! ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endfunction
+"打开文件类型检测，加载特定的缩进。
+filetype plugin indent on
+"打开文件类型检测, 加了这句才可以用智能补全
+set completeopt=longest,menu
+
+"=============新建.c,.h,.sh,.java文件，自动插入文件头
+"autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.html exec ":call SetTitle()"
+autocmd BufNewFile *.sh,*.html,*.js,*.c,*.h,*.cpp  exec ":call SetTitle()"
+""定义函数SetTitle，自动插入文件头
+func SetTitle()
+    "如果文件类型为.sh文件
+    if &filetype == 'sh'
+        call setline(1,"\############################")
+        call append(line("."), "\# File Name: ".expand("%"))
+        call append(line(".")+1, "\# Author: Pudge")
+        call append(line(".")+2, "\# Mail: EternalNight996@gmail.com")
+        call append(line(".")+3, "\# Created Time: ".strftime("%c"))
+        call append(line(".")+4, "\############################")
+        call append(line(".")+5, "\#!/bin/bash")
+        call append(line(".")+6, "")
+    elseif &filetype == 'html'
+        call setline(1,"<!--************************************************-->")
+        call append(line("."), "<!--*File Name: ".expand("%"))
+        call append(line(".")+1, "* Author: Pudge")
+        call append(line(".")+2, "* Mail: EternalNight996@gmail.com")
+        call append(line(".")+3, "* Created Time: ".strftime("%c"))
+        call append(line(".")+4, "-->")
+        call append(line(".")+5, "<!DOCTYPE html>")
+        call append(line(".")+6, "<html lang=\"en\">")
+        call append(line(".")+7, "<head>")
+        call append(line(".")+8, "  <meta charset=\"utf-8\" />")
+        call append(line(".")+9, "</head>")
+        call append(line(".")+10, "<body>")
+        call append(line(".")+11, "</body>")
+        call append(line(".")+12, "</html>")
+    elseif &filetype == 'c' || &filetype == 'cpp'
+        call setline(1,"/* ************************************************ */")
+        call append(line("."), "/*File Name: ".expand("%"))
+        call append(line(".")+1, "* Author: Pudge")
+        call append(line(".")+2, "* Mail: EternalNight996@gmail.com")
+        call append(line(".")+3, "* Created Time: ".strftime("%c"))
+        call append(line(".")+4, "*/")
+    elseif &filetype == 'javascript'
+        call setline(1,"/* ************************************************ */")
+        call append(line("."), "/*File Name: ".expand("%"))
+        call append(line(".")+1, "* Author: Pudge")
+        call append(line(".")+2, "* Mail: EternalNight996@gmail.com")
+        call append(line(".")+3, "* Created Time: ".strftime("%c"))
+        call append(line(".")+4, "*/")
+    endif
+    "新建文件后，自动定位到文件末尾
+    autocmd BufNewFile * normal G
+endfunc
+
