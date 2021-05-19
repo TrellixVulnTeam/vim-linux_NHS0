@@ -468,27 +468,30 @@ let g:ycm_warning_symbol = '>'
 "CSS补全
 let g:ycm_semantic_triggers = {
    "\   'css': [ 're!^\s{4}', 're!:\s+' ],"
-   \   'css': [ 're!^\s{4}', 're!' ],
    \ }
+"JS补全
+let g:ycm_semantic_triggers = {
+    \ 'javascript': [ 're!^\s{4}', 're!:\s+' ],
+    \ }
 "=======================YouCompleteMe补全配置==========================
 "
 set clipboard+=unnamed "共享粘贴板
 "自动补全基本设定
-:inoremap ( ()<ESC>i
-:inoremap ) <c-r>=ClosePair(')')<CR>
-:inoremap { {<CR>}<ESC>O
-:inoremap } <c-r>=ClosePair('}')<CR>
-:inoremap [ []<ESC>i
-:inoremap ] <c-r>=ClosePair(']')<CR>
-:inoremap " ""<ESC>i
-:inoremap ' ''<ESC>i
-function! ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>"
-    else
-        return a:char
-    endif
-endfunction
+"":inoremap ( ()<ESC>i
+"":inoremap ) <c-r>=ClosePair(')')<CR>
+"":inoremap { {<CR>}<ESC>O
+"":inoremap } <c-r>=ClosePair('}')<CR>
+"":inoremap [ []<ESC>i
+"":inoremap ] <c-r>=ClosePair(']')<CR>
+"":inoremap " ""<ESC>i
+"":inoremap ' ''<ESC>i
+""function! ClosePair(char)
+""    if getline('.')[col('.') - 1] == a:char
+""        return "\<Right>"
+""    else
+""        return a:char
+""    endif
+""endfunction
 "打开文件类型检测，加载特定的缩进。
 filetype plugin indent on
 "打开文件类型检测, 加了这句才可以用智能补全
