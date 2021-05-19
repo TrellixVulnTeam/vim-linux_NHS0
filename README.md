@@ -21,6 +21,8 @@ chmod +x *.sh
 ./pathogen_update.sh
 # 安装
 ./install.sh --all
+# 目前已经测试有
+javascript go c/c++ python3 html css ....
 # 快捷键请参考博客:
 https://www.cnblogs.com/eternalnight/p/13900085.html
 
