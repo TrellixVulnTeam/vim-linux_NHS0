@@ -467,12 +467,12 @@ let g:ycm_warning_symbol = '>'
 "highlight Pmenu ctermfg=4 ctermbg=8 guifg=#FF0000 guibg=#FFFFFF
 "CSS补全
 let g:ycm_semantic_triggers = {
-   "\   'css': [ 're!^\s{4}', 're!:\s+' ],"
+   \   'css': [ 're!^\s{4}', 're!:\s+' ],
    \ }
 "JS补全
-let g:ycm_semantic_triggers = {
-    \ 'javascript': [ 're!^\s{4}', 're!:\s+' ],
-    \ }
+"let g:ycm_semantic_triggers = {
+""    \ 'javascript': [ 're!^\s{4}', 're!:\s+' ],
+""    \ }
 "=======================YouCompleteMe补全配置==========================
 "
 set clipboard+=unnamed "共享粘贴板
@@ -498,7 +498,6 @@ filetype plugin indent on
 set completeopt=longest,menu
 
 "=============新建.c,.h,.sh,.java文件，自动插入文件头
-"autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.html exec ":call SetTitle()"
 autocmd BufNewFile *.sh,*.html,*.js,*.c,*.h,*.cpp  exec ":call SetTitle()"
 ""定义函数SetTitle，自动插入文件头
 func SetTitle()
