@@ -340,14 +340,14 @@ let NERDTreeShowBookmarks=1 "显示书签
 let NERDTreeShowHidden=1 "显示隐藏
 
 " change-colorscheme颜色配置快捷键
-nnoremap <silent> <F9> :RandomColorScheme<cr>
-inoremap <silent> <F9> <esc> :RandomColorScheme<cr>
-nnoremap <silent> <F10> :ShowColorScheme<cr>
-inoremap <silent> <F10> <esc> :ShowColorScheme<cr>
-"nnoremap <silent> <F7> :PreviousColorScheme<cr>
-"inoremap <silent> <F7> <esc> :PreviousColorScheme<cr>
-"nnoremap <silent> <F8> :NextColorScheme<cr>
-"inoremap <silent> <F8> <esc> :NextColorScheme<cr>
+"nnoremap <silent> <F9> :RandomColorScheme<cr>
+"inoremap <silent> <F9> <esc> :RandomColorScheme<cr>
+"nnoremap <silent> <F10> :ShowColorScheme<cr>
+"inoremap <silent> <F10> <esc> :ShowColorScheme<cr>
+nnoremap <silent> <F10> :PreviousColorScheme<cr>
+inoremap <silent> <F10> <esc> :PreviousColorScheme<cr>
+nnoremap <silent> <F9> :NextColorScheme<cr>
+inoremap <silent> <F9> <esc> :NextColorScheme<cr>
 
 "编译函数
 func CompileRun()
