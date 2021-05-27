@@ -292,8 +292,8 @@ if has("gui_running")
     if system == "Darwin\n"
         set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h13 " 设置字体
     else
-        "set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 13      " 设置字体
-        set guifont=Ubuntu\ Mono\ Bold\ 13      " 设置字体
+        "set guifont=Ubuntu\ Mono\ Bold\ 13      " 设置字体
+        set guifont=DejaVu\ Sans\ Mono\ Bold\ 13
     endif
 "    set guioptions-=m           " 隐藏菜单栏
 "    set guioptions-=T           " 隐藏工具栏
