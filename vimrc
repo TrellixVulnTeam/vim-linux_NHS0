@@ -2,14 +2,15 @@ source ~/.vim/bundles.vim
 Plugin 'marijnh/tern_for_vim'
 Plugin 'Valloric/YouCompleteMe'
 
+
 " 解决乱码
 "set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 set encoding=utf-8
 set fileencodings=utf-8,chinese,latin-1
 if has("win32")
-set fileencoding=chinese
+    set fileencoding=chinese
 else
-set fileencoding=utf-8
+    set fileencoding=utf-8
 endif
 "解决菜单乱码
 source $VIMRUNTIME/delmenu.vim
@@ -263,28 +264,6 @@ nnoremap ; :
 :command Qa qa
 :command QA qa
 
-" for macvim
-"if has("gui_running")
-"    set go=aAce  " remove toolbar
-"    "set transparency=30
-"    set guifont=Monaco:h13
-"    set showtabline=2
-"    set columns=140
-"    set lines=40
-"    noremap <D-M-Left> :tabprevious<cr>
-"    noremap <D-M-Right> :tabnext<cr>
-"    map <D-1> 1gt
-"    map <D-2> 2gt
-"    map <D-3> 3gt
-"    map <D-4> 4gt
-"    map <D-5> 5gt
-"    map <D-6> 6gt
-"    map <D-7> 7gt
-"    map <D-8> 8gt
-"    map <D-9> 9gt
-"    map <D-0> :tablast<CR>
-"endif
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 缓存设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -308,13 +287,14 @@ set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gvim/macvim设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"if has("gui_running")
-"    let system = system('uname -s')
-"    if system == "Darwin\n"
-"        set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h18 " 设置字体
-"    else
-"        set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 18      " 设置字体
-"    endif
+if has("gui_running")
+    let system = system('uname -s')
+    if system == "Darwin\n"
+        set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h13 " 设置字体
+    else
+        "set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 13      " 设置字体
+        set guifont=Ubuntu\ Mono\ Bold\ 13      " 设置字体
+    endif
 "    set guioptions-=m           " 隐藏菜单栏
 "    set guioptions-=T           " 隐藏工具栏
 "    set guioptions-=L           " 隐藏左侧滚动条
@@ -322,7 +302,7 @@ set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 "    set guioptions-=b           " 隐藏底部滚动条
 "    set showtabline=0           " 隐藏Tab栏
 "    set guicursor=n-v-c:ver5    " 设置光标为竖线
-"endif
+endif
 
 "背景透明度跟随终端
 hi Normal ctermfg=252 ctermbg=none
