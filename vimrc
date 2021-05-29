@@ -71,22 +71,6 @@ set shiftwidth=4    " indent width
 " set textwidth=79
 " set smarttab
 set expandtab       " expand tab to space
-
-autocmd FileType php setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
-autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
-autocmd FileType php setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
-autocmd FileType coffee,javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
-autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
-autocmd FileType html,htmldjango,xhtml,haml setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=0
-autocmd FileType sass,scss,css setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
-
-" syntax support
-autocmd Syntax javascript set syntax=jquery   " JQuery syntax support
-" js
-let g:html_indent_inctags = "html,body,head,tbody"
-let g:html_indent_script1 = "inc"
-let g:html_indent_style1 = "inc"
-
 "-----------------
 " Plugin settings
 "-----------------
@@ -192,10 +176,27 @@ imap <C-F8> <Plug>(neocomplcache_snippets_force_jump)
 smap <C-F8> <Plug>(neocomplcache_snippets_force_jump)
 let g:snipMate = { 'snippet_version' : 1 }
 
+" 语法配置
+autocmd FileType php setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+autocmd FileType php setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
+autocmd FileType coffee,javascript,javascriptreact setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
+autocmd FileType html,htmldjango,xhtml,haml setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=0
+autocmd FileType sass,scss,css setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+
+" syntax support
+autocmd Syntax javascript,javascriptreact set syntax=jquery   " JQuery syntax support
+" js
+let g:html_indent_inctags = "html,body,head,tbody"
+let g:html_indent_script1 = "inc"
+let g:html_indent_style1 = "inc"
+
+
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript,javascriptreact setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType c setlocal omnifunc=ccomplete#Complete
 if !exists('g:neocomplcache_omni_patterns')
@@ -513,7 +514,7 @@ func SetTitle()
         call append(line(".")+2, "* Mail: EternalNight996@gmail.com")
         call append(line(".")+3, "* Created Time: ".strftime("%c"))
         call append(line(".")+4, "*/")
-    elseif &filetype == 'javascript'
+    elseif &filetype == 'javascript,javascriptreact'
         call setline(1,"/* ************************************************ */")
         call append(line("."), "/*File Name: ".expand("%"))
         call append(line(".")+1, "* Author: Pudge")
