@@ -478,7 +478,7 @@ filetype plugin indent on
 set completeopt=longest,menu
 
 "=============新建.c,.h,.sh,.java文件，自动插入文件头
-autocmd BufNewFile *.sh,*.html,*.js,*.jsx,*.c,*.tsx,*.h,*.cpp  exec ":call SetTitle()"
+autocmd BufNewFile *.sh,*.html,*.js,*.jsx,*.c,*.ts,*.tsx,*.h,*.cpp  exec ":call SetTitle()"
 ""定义函数SetTitle，自动插入文件头
 func SetTitle()
     "如果文件类型为.sh文件
