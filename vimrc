@@ -2,7 +2,6 @@ source ~/.vim/bundles.vim
 Plugin 'marijnh/tern_for_vim'
 Plugin 'Valloric/YouCompleteMe'
 
-
 " 解决乱码
 "set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 set encoding=utf-8
@@ -180,13 +179,13 @@ let g:snipMate = { 'snippet_version' : 1 }
 autocmd FileType php setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
 autocmd FileType php setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
-autocmd FileType coffee,javascript,javascriptreact setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+autocmd FileType coffee,javascript,javascriptreact,typescriptreact setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
 autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
 autocmd FileType html,htmldjango,xhtml,haml setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=0
 autocmd FileType sass,scss,css setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
 
 " syntax support
-autocmd Syntax javascript,javascriptreact set syntax=jquery   " JQuery syntax support
+autocmd Syntax javascript,javascriptreact,typescriptreact set syntax=jquery   " JQuery syntax support
 " js
 let g:html_indent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
@@ -196,7 +195,7 @@ let g:html_indent_style1 = "inc"
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript,javascriptreact setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript,javascriptreact,typescriptreact setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType c setlocal omnifunc=ccomplete#Complete
 if !exists('g:neocomplcache_omni_patterns')
@@ -479,7 +478,7 @@ filetype plugin indent on
 set completeopt=longest,menu
 
 "=============新建.c,.h,.sh,.java文件，自动插入文件头
-autocmd BufNewFile *.sh,*.html,*.js,*.jsx,*.c,*.h,*.cpp  exec ":call SetTitle()"
+autocmd BufNewFile *.sh,*.html,*.js,*.jsx,*.c,*.tsx,*.h,*.cpp  exec ":call SetTitle()"
 ""定义函数SetTitle，自动插入文件头
 func SetTitle()
     "如果文件类型为.sh文件
@@ -507,14 +506,7 @@ func SetTitle()
         call append(line(".")+10, "<body>")
         call append(line(".")+11, "</body>")
         call append(line(".")+12, "</html>")
-    elseif &filetype == 'c' || &filetype == 'cpp'
-        call setline(1,"/* ************************************************ */")
-        call append(line("."), "/*File Name: ".expand("%"))
-        call append(line(".")+1, "* Author: Pudge")
-        call append(line(".")+2, "* Mail: EternalNight996@gmail.com")
-        call append(line(".")+3, "* Created Time: ".strftime("%c"))
-        call append(line(".")+4, "*/")
-    elseif &filetype == 'javascript' || &filetype == 'javascriptreact'
+    elseif &filetype == 'c' || &filetype == 'cpp' || &filetype == 'javascript' || &filetype == 'javascriptreact'|| &filetype == 'typescriptreact'
         call setline(1,"/* ************************************************ */")
         call append(line("."), "/*File Name: ".expand("%"))
         call append(line(".")+1, "* Author: Pudge")
