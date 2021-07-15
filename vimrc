@@ -183,6 +183,7 @@ autocmd FileType coffee,javascript,javascriptreact,typescript,typescriptreact se
 autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
 autocmd FileType html,htmldjango,xhtml,haml setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=0
 autocmd FileType sass,scss,css setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+autocmd FileType rust setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
 
 " syntax support
 autocmd Syntax javascript,javascriptreact,typescript,typescriptreact set syntax=jquery   " JQuery syntax support
@@ -293,7 +294,7 @@ if has("gui_running")
         set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h13 " 设置字体
     else
         "set guifont=Ubuntu\ Mono\ Bold\ 13      " 设置字体
-        set guifont=DejaVu\ Sans\ Mono\ Bold\ 13
+        set guifont=DejaVu\ Sans\ Mono\ Bold\ 10
     endif
 "    set guioptions-=m           " 隐藏菜单栏
 "    set guioptions-=T           " 隐藏工具栏
@@ -340,6 +341,10 @@ func CompileRun()
     elseif &filetype == 'cpp'
         exec "!time g++  % -g -o %<.out -lm"
 "如果出现了错误 from auto-imported DLLs 就在 !g++ 后面加  -Wall --enable-auto-import
+
+"Rust
+    elseif &filetype == 'rust'
+        exec "!time rust %"
 "Java程序
     elseif &filetype == 'java'
         exec "!time javac %"
@@ -356,12 +361,16 @@ endfunc
 
 "定义Run运行函数
 func Run()
+"---------c/c++-----------
     if &filetype == 'c' || &filetype == 'cpp'
         exec "!time ./%<.out"
+"--------rust-------------
+    elseif &filetype == 'rust'
+        exec "!time rustc %"
 
 "---------JAVA------------
     elseif &filetype == 'java'
-        exec "!time java %<"
+        exec "!time java %"
 
 "-------------Python执行------------
     elseif &filetype == 'python'
@@ -478,7 +487,7 @@ filetype plugin indent on
 set completeopt=longest,menu
 
 "=============新建.c,.h,.sh,.java文件，自动插入文件头
-autocmd BufNewFile *.sh,*.html,*.js,*.jsx,*.c,*.ts,*.tsx,*.h,*.cpp  exec ":call SetTitle()"
+autocmd BufNewFile *.sh,*.html,*.js,*.jsx,*.ts,*.tsx  exec ":call SetTitle()"
 ""定义函数SetTitle，自动插入文件头
 func SetTitle()
     "如果文件类型为.sh文件
@@ -506,13 +515,6 @@ func SetTitle()
         call append(line(".")+10, "<body>")
         call append(line(".")+11, "</body>")
         call append(line(".")+12, "</html>")
-    elseif &filetype == 'c' || &filetype == 'cpp' || &filetype == 'javascript' || &filetype == 'javascriptreact'|| &filetype == 'typescriptreact' || &filetype == 'typescript'
-        call setline(1,"/* ************************************************ */")
-        call append(line("."), "/*File Name: ".expand("%"))
-        call append(line(".")+1, "* Author: Pudge")
-        call append(line(".")+2, "* Mail: EternalNight996@gmail.com")
-        call append(line(".")+3, "* Created Time: ".strftime("%c"))
-        call append(line(".")+4, "*/")
     endif
     "新建文件后，自动定位到文件末尾
     autocmd BufNewFile * normal G
