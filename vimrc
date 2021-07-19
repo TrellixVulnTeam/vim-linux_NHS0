@@ -183,7 +183,7 @@ autocmd FileType coffee,javascript,javascriptreact,typescript,typescriptreact se
 autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
 autocmd FileType html,htmldjango,xhtml,haml setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=0
 autocmd FileType sass,scss,css setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
-autocmd FileType rust setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+autocmd FileType rust setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
 
 " syntax support
 autocmd Syntax javascript,javascriptreact,typescript,typescriptreact set syntax=jquery   " JQuery syntax support
@@ -199,6 +199,7 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript,javascriptreact,typescriptreact,typescript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType c setlocal omnifunc=ccomplete#Complete
+autocmd FileType rust setlocal omnifunc=rustcomplete#Complete
 if !exists('g:neocomplcache_omni_patterns')
   let g:neocomplcache_omni_patterns = {}
 endif
@@ -223,6 +224,7 @@ nmap <F4> :TagbarToggle<cr>
 "nmap <F7> :GundoToggle<cr>
 nmap <F8> :IndentGuidesToggle<cr>
 nmap  <D-/> :
+nmap <C-F2> :!rustfmt %<cr>
 nnoremap <leader>a :Ack
 nnoremap <leader>v V`]
 
@@ -330,6 +332,7 @@ inoremap <silent> <F10> <esc> :PreviousColorScheme<cr>
 nnoremap <silent> <F9> :NextColorScheme<cr>
 inoremap <silent> <F9> <esc> :NextColorScheme<cr>
 
+
 "编译函数
 func CompileRun()
     exec "w"
@@ -344,7 +347,7 @@ func CompileRun()
 
 "Rust
     elseif &filetype == 'rust'
-        exec "!time rust %"
+        exec "!time rustc % -o %<.out"
 "Java程序
     elseif &filetype == 'java'
         exec "!time javac %"
@@ -366,7 +369,7 @@ func Run()
         exec "!time ./%<.out"
 "--------rust-------------
     elseif &filetype == 'rust'
-        exec "!time rustc %"
+        exec "!time cargo run"
 
 "---------JAVA------------
     elseif &filetype == 'java'
@@ -419,10 +422,21 @@ func Debug()
 endfunc
 "结束定义Debug
 
+"定义Test函数，用来调试程序
+func Test()
+    exec "w"
+"Rust程序
+    if &filetype == 'rust'
+        exec "!cargo test"
+    elseif &filetype == 'c'
+    endif
+endfunc
+
 "设置程序的运行和调试的快捷键F5和Ctrl-F5
 map <F5> :call CompileRun()<CR>
 map <F6> :call Run()<CR>
 map <C-F5> :call Debug()<CR>
+map <C-F6> :call Test()<CR>
 
 "=======================YouCompleteMe补全配置==========================
 let g:ycm_server_python_interpreter='/usr/bin/python3'
