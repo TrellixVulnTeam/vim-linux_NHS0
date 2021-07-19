@@ -46,9 +46,10 @@ ln -s -f ~/.vim/bundle/tern_for_vim/.tern-project ~/
 ln -s -f ~/.vim/vimrc ~/.vimrc
 # 
 cd ~/.vim/bundle/YouCompleteMe
-
 # 安装
 ./install.sh --all #配置前把需要用的语言安装了
+# 
+vim #打开vim后安装插件 :BundleInstall
 # 快捷键请参考博客:
 https://www.cnblogs.com/eternalnight/p/13900085.html
 
