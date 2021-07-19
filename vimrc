@@ -2,24 +2,6 @@ source ~/.vim/bundles.vim
 Plugin 'marijnh/tern_for_vim'
 Plugin 'Valloric/YouCompleteMe'
 
-" 解决乱码
-"set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
-set encoding=utf-8
-set fileencodings=utf-8,chinese,latin-1
-if has("win32")
-    set fileencoding=chinese
-else
-    set fileencoding=utf-8
-endif
-"解决菜单乱码
-source $VIMRUNTIME/delmenu.vim
-source $VIMRUNTIME/menu.vim
-"解决consle输出乱码
-language messages zh_CN.utf-8
-
-" enable filetype dectection and ft specific plugin/indent
-filetype plugin indent on
-
 " enable syntax hightlight and completion
 syntax on
 
@@ -65,10 +47,10 @@ set matchpairs+=<:>                                               " specially fo
 set autoindent
 set smartindent     " indent when
 set tabstop=4       " tab width
-"set softtabstop=4   " backspace
+set softtabstop=4   " backspace
 set shiftwidth=4    " indent width
-" set textwidth=79
-" set smarttab
+set textwidth=120
+set smarttab
 set expandtab       " expand tab to space
 "-----------------
 " Plugin settings
@@ -192,7 +174,6 @@ let g:html_indent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 
-
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -200,6 +181,7 @@ autocmd FileType javascript,javascriptreact,typescriptreact,typescript setlocal 
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType c setlocal omnifunc=ccomplete#Complete
 autocmd FileType rust setlocal omnifunc=rustcomplete#Complete
+
 if !exists('g:neocomplcache_omni_patterns')
   let g:neocomplcache_omni_patterns = {}
 endif
@@ -273,7 +255,7 @@ nnoremap ; :
 set nobackup            " 设置不备份
 set noswapfile          " 禁止生成临时文件
 set autoread            " 文件在vim之外修改过，自动重新读入
-set autowrite           " 设置自动保存
+"set autowrite           " 设置自动保存
 set confirm             " 在处理未保存或只读文件的时候，弹出确认
 
 
@@ -284,7 +266,19 @@ set langmenu=zh_CN.UTF-8
 set helplang=cn
 set termencoding=utf-8
 set encoding=utf8
-set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
+"set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
+
+if has("win32")
+    set fileencodings=utf-8,chinese,latin-1
+else
+    set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
+endif
+
+"解决菜单乱码
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+"解决consle输出乱码
+language messages zh_CN.utf-8
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -476,7 +470,6 @@ let g:ycm_semantic_triggers = {
 "let g:ycm_semantic_triggers = {
 ""    \ 'javascript': [ 're!^\s{4}', 're!:\s+' ],
 ""    \ }
-"=======================YouCompleteMe补全配置==========================
 "
 set clipboard+=unnamed "共享粘贴板
 "自动补全基本设定
